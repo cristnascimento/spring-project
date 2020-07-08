@@ -1,0 +1,99 @@
+<!DOCTYPE HTML>
+<html xmlns:layout="http://www.w3.org/1999/xhtml" layout:decorate="~{contact-master}">
+<head>
+    <title>Spring Boot Thymeleaf + Spring Security</title>
+</head>
+<body>
+<div layout:fragment="content" class="container col-md-6">
+    <br/>
+    <h1>Add/Edit/View Contact</h2>
+    <br/>
+    <form method="POST" th:action="@{/contact/post}" th:object="${contact}">
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="inputFirstName">First name</label>
+          <input type="text" class="form-control" id="inputFirstName" name="firstName" th:field="*{firstName}">
+        </div>
+        <div class="form-group col-md-6">
+          <label for="inputLastName">Last Name</label>
+          <input type="text" class="form-control" id="inputLastName" name="lastName" th:field="*{lastName}">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="inputEmail">E-mail</label>
+        <input type="email" class="form-control" id="inputEmail" name="email" th:field="*{email}">
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-8">
+          <label for="inputPhone">Phone</label>
+          <input type="text" class="form-control" id="inputPhone" name="phone" th:field="*{phone}">
+        </div>
+        <div class="form-group col-md-4">
+          <label for="inputPhoneCategory">Category</label>
+          <select id="inputPhoneCategory" name="phoneCategory" class="form-control" th:field="*{phoneCategory}">
+            <option selected th:value="Mobile">Mobile</option>
+            <option th:value="Home">Home</option>
+            <option th:value="Work">Work</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="inputAddress">Address</label>
+        <input type="text" class="form-control" id="inputAddress" name="address"  th:field="*{address}" placeholder="1234 Main St">
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="inputCity">City</label>
+          <input type="text" class="form-control" id="inputCity" name="city" th:field="*{city}">
+        </div>
+        <div class="form-group col-md-4">
+          <label for="inputState">State</label>
+          <select id="inputState" name="state"  th:field="*{state}" class="form-control">
+            <option th:value="AC">AC</option>
+            <option th:value="AL">AL</option>
+            <option th:value="AP">AP</option>
+            <option th:value="AM">AM</option>
+            <option th:value="BA">BA</option>
+            <option th:value="CE">CE</option>
+            <option th:value="DF">DF</option>
+            <option th:value="ES">ES</option>
+            <option th:value="GO">GO</option>
+            <option th:value="MA">MA</option>
+            <option th:value="MT">MT</option>
+            <option th:value="MS">MS</option>
+            <option th:value="MG">MG</option>
+            <option th:value="PA">PA</option>
+            <option th:value="PB">PB</option>
+            <option th:value="PR">PR</option>
+            <option th:value="PE">PE</option>
+            <option th:value="PI">PI</option>
+            <option th:value="RJ">RJ</option>
+            <option th:value="RN">RN</option>
+            <option th:value="RS">RS</option>
+            <option th:value="RO">RO</option>
+            <option th:value="RR">RR</option>
+            <option th:value="SC">SC</option>
+            <option th:value="SP">SP</option>
+            <option th:value="SE">SE</option>
+            <option th:value="TO">TO</option>
+          </select>
+        </div>
+        <div class="form-group col-md-2">
+          <label for="inputZip">Zip</label>
+          <input type="text" class="form-control" id="inputZip" name="zip" th:field="*{zip}">
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" id="inputCloseFriend" name="closeFriend" th:field="*{closeFriend}" th:value="checked">
+          <label class="form-check-label" for="inputCloseFriend">
+            Close Friend
+          </label>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-primary">Add</button>
+      <a href="/contact/list" class="btn btn-warning">Cancel</a>
+    </form>
+</div>
+</body>
+</html>
