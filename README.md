@@ -257,6 +257,81 @@ public ModelAndView post(@ModelAttribute Contact contact) {
 }
 ```
 
+## Create a Service
+
+create ContactService.java interface
+
+```java
+package com.github.cristnascimento.contactlistapp;
+
+import java.util.Collection;
+
+public interface ContactService {
+   public abstract void createContact(Contact contact);
+   public abstract void updateContact(long id, Contact contact);
+   public abstract void deleteContact(long id);
+   public abstract Collection<Contact> getContacts();
+}
+```
+
+implement the interface ContactServiceHashMap.java
+
+```java
+package com.github.cristnascimento.contactlistapp;
+
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+import org.springframework.stereotype.Service;
+
+@Service
+public class ContactServiceHashMap implements ContactService {
+   private static Map<Long, Contact> contactRepo = new HashMap<>();
+   static {
+      Contact honey = new Contact();
+      honey.setId(1);
+      honey.setName("Honey");
+      contactRepo.put(honey.getId(), honey);
+
+      Contact almond = new Contact();
+      almond.setId(2);
+      almond.setName("Almond");
+      contactRepo.put(almond.getId(), almond);
+   }
+   @Override
+   public void createContact(Contact contact) {
+      contactRepo.put(contact.getId(), contact);
+   }
+   @Override
+   public void updateContact(long id, Contact contact) {
+      contactRepo.remove(id);
+      contact.setId(id);
+      contactRepo.put(id, contact);
+   }
+...
+```
+Here we included the repository (HashMap) inside the service. Later we can create a DAO class to access a repository. Then, the service can use the DAO.
+
+autowire the service in the ContactListAppController.java
+
+```java
+import org.springframework.beans.factory.annotation.Autowired;
+...
+@Controller
+public class ContactListAppController {
+  @Autowired
+  ContactService contactService;
+...
+```
+
+use the service in the ContactListAppController.java
+
+```java
+contactService.createContact(contact);
+```
+
+no need to create a service object with the **new** operator.
+See [this tutorial](https://www.tutorialspoint.com/spring_boot/spring_boot_service_components.htm) on [TutorialsPoint](https://www.tutorialspoint.com).
 ## Troubleshooting
 
 Verify if the HTML is well-formatted.
@@ -268,3 +343,12 @@ Verify if the HTML is well-formatted.
 
 <html xmlns:layout="http://www.w3.org/1999/xhtml" layout:decorate="~{contact-master}">
 <div layout:fragment="content" class="container col-md-6">
+
+
+
+
+  {{#if message}}
+            <div class="alert {{messageClass}}" role="alert">
+                {{message}}
+            </div>
+        {{/if}}

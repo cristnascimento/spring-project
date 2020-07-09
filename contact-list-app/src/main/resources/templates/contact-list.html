@@ -5,7 +5,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
-    <div layout:fragment="content" class="container col-md-8">
+  <div layout:fragment="content" class="container col-md-8">
     <br/>
     <h3>List of contacts</h3>
     <br/>
@@ -20,74 +20,21 @@
         </tr>
       </thead>
       <tbody>
+        <th:block th:each="contact: ${contacts}">
         <tr>
-          <th scope="row">1</th>
-          <td>Mark</td>
-          <td>Otto</td>
-          <td>@mdo</td>
+          <th scope="row" th:text="${contactStat.index + 1}"></th>
+          <td th:text="${contact.firstName}"></td>
+          <td th:text="${contact.lastName}"></td>
+          <td th:text="${contact.email}"></td>
           <td>
-            <a class="btn btn-success" href="/contact/view/:id" role="button">View</a>
-            <a class="btn btn-warning" href="/contact/edit/:id" role="button">Edit</a>
-            <a class="btn btn-danger" href="/contact/delete/:id" role="button">Remove</a>
+            <a class="btn btn-success" th:href="@{/contact/view/{id}(id=${contact.id})}" role="button">View</a>
+            <a class="btn btn-warning" th:href="@{/contact/edit/{id}(id=${contact.id})}" role="button">Edit</a>
+            <a class="btn btn-danger" th:href="@{/contact/delete/{id}(id=${contact.id})}" role="button">Remove</a>
           </td>
         </tr>
-        <tr>
-          <th scope="row">2</th>
-          <td>Jacob</td>
-          <td>Thornton</td>
-          <td>@fat</td>
-          <td>
-            <a class="btn btn-success" href="#" role="button">View</a>
-            <a class="btn btn-warning" href="#" role="button">Edit</a>
-            <a class="btn btn-danger" href="#" role="button">Remove</a>
-          </td>
-        </tr>
-        <tr>
-          <th scope="row">3</th>
-          <td>Larry</td>
-          <td>the Bird</td>
-          <td>@twitter</td>
-          <td>
-            <a class="btn btn-success" href="#" role="button">View</a>
-            <a class="btn btn-warning" href="#" role="button">Edit</a>
-            <a class="btn btn-danger" href="#" role="button">Remove</a>
-          </td>
-        </tr>
-        <tr>
-          <th scope="row">4</th>
-          <td>Larry</td>
-          <td>the Bird</td>
-          <td>@twitter</td>
-          <td>
-            <a class="btn btn-success" href="#" role="button">View</a>
-            <a class="btn btn-warning" href="#" role="button">Edit</a>
-            <a class="btn btn-danger" href="#" role="button">Remove</a>
-          </td>
-        </tr>
-        <tr>
-          <th scope="row">5</th>
-          <td>Larry</td>
-          <td>the Bird</td>
-          <td>@twitter</td>
-          <td>
-            <a class="btn btn-success" href="#" role="button">View</a>
-            <a class="btn btn-warning" href="#" role="button">Edit</a>
-            <a class="btn btn-danger" href="#" role="button">Remove</a>
-          </td>
-        </tr>
-        <tr>
-          <th scope="row">6</th>
-          <td>Page</td>
-          <td>the Bird</td>
-          <td>@twitter</td>
-          <td>
-            <a class="btn btn-success" href="#" role="button">View</a>
-            <a class="btn btn-warning" href="#" role="button">Edit</a>
-            <a class="btn btn-danger" href="#" role="button">Remove</a>
-          </td>
-        </tr>
+        </th:block>
       </tbody>
     </table>
-</div>
+  </div>
 </body>
 </html>

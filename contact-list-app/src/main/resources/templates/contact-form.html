@@ -8,30 +8,30 @@
     <br/>
     <h1>Add/Edit/View Contact</h2>
     <br/>
-    <form method="POST" th:action="@{/contact/post}" th:object="${contact}">
+    <form method="POST" th:action="@{{action}(action=${action})}" th:object="${contact}">
       <div class="form-row">
         <div class="form-group col-md-6">
           <label for="inputFirstName">First name</label>
-          <input type="text" class="form-control" id="inputFirstName" name="firstName" th:field="*{firstName}">
+          <input type="text" class="form-control" id="inputFirstName" name="firstName" th:field="*{firstName}" th:readonly="${readonly}">
         </div>
         <div class="form-group col-md-6">
           <label for="inputLastName">Last Name</label>
-          <input type="text" class="form-control" id="inputLastName" name="lastName" th:field="*{lastName}">
+          <input type="text" class="form-control" id="inputLastName" name="lastName" th:field="*{lastName}" th:readonly="${readonly}">
         </div>
       </div>
       <div class="form-group">
         <label for="inputEmail">E-mail</label>
-        <input type="email" class="form-control" id="inputEmail" name="email" th:field="*{email}">
+        <input type="email" class="form-control" id="inputEmail" name="email" th:field="*{email}" th:readonly="${readonly}">
       </div>
       <div class="form-row">
         <div class="form-group col-md-8">
           <label for="inputPhone">Phone</label>
-          <input type="text" class="form-control" id="inputPhone" name="phone" th:field="*{phone}">
+          <input type="text" class="form-control" id="inputPhone" name="phone" th:field="*{phone}" th:readonly="${readonly}">
         </div>
         <div class="form-group col-md-4">
           <label for="inputPhoneCategory">Category</label>
-          <select id="inputPhoneCategory" name="phoneCategory" class="form-control" th:field="*{phoneCategory}">
-            <option selected th:value="Mobile">Mobile</option>
+          <select id="inputPhoneCategory" name="phoneCategory" class="form-control" th:field="*{phoneCategory}" th:disabled="${disabled}">
+            <option th:value="Mobile">Mobile</option>
             <option th:value="Home">Home</option>
             <option th:value="Work">Work</option>
           </select>
@@ -39,16 +39,16 @@
       </div>
       <div class="form-group">
         <label for="inputAddress">Address</label>
-        <input type="text" class="form-control" id="inputAddress" name="address"  th:field="*{address}" placeholder="1234 Main St">
+        <input type="text" class="form-control" id="inputAddress" name="address"  th:field="*{address}"  th:readonly="${readonly}" placeholder="1234 Main St">
       </div>
       <div class="form-row">
         <div class="form-group col-md-6">
           <label for="inputCity">City</label>
-          <input type="text" class="form-control" id="inputCity" name="city" th:field="*{city}">
+          <input type="text" class="form-control" id="inputCity" name="city" th:field="*{city}" th:readonly="${readonly}">
         </div>
         <div class="form-group col-md-4">
           <label for="inputState">State</label>
-          <select id="inputState" name="state"  th:field="*{state}" class="form-control">
+          <select id="inputState" name="state"  th:field="*{state}" th:disabled="${disabled}" class="form-control">
             <option th:value="AC">AC</option>
             <option th:value="AL">AL</option>
             <option th:value="AP">AP</option>
@@ -80,19 +80,29 @@
         </div>
         <div class="form-group col-md-2">
           <label for="inputZip">Zip</label>
-          <input type="text" class="form-control" id="inputZip" name="zip" th:field="*{zip}">
+          <input type="text" class="form-control" id="inputZip" name="zip" th:field="*{zip}" th:readonly="${readonly}">
         </div>
       </div>
       <div class="form-group">
         <div class="form-check">
-          <input class="form-check-input" type="checkbox" id="inputCloseFriend" name="closeFriend" th:field="*{closeFriend}" th:value="checked">
+          <input class="form-check-input" type="checkbox" id="inputCloseFriend" name="closeFriend" th:field="*{closeFriend}" th:value="on" th:disabled="${disabled}">  
           <label class="form-check-label" for="inputCloseFriend">
             Close Friend
           </label>
         </div>
       </div>
-      <button type="submit" class="btn btn-primary">Add</button>
-      <a href="/contact/list" class="btn btn-warning">Cancel</a>
+      <div th:if="${mode} == 'add'">
+        <button type="submit" class="btn btn-primary">Add</button>
+        <a href="/contact/list" class="btn btn-warning">Cancel</a>
+      </div>
+      <div th:if="${mode} == 'edit'">
+        <button type="submit" class="btn btn-primary">Update</button>
+        <a href="/contact/list" class="btn btn-warning">Cancel</a>
+      </div>
+      <div th:if="${mode} == 'view'">
+        <a th:href="@{/contact/edit/{id}(id=${contact.id})}" class="btn btn-primary">Edit</a>
+        <a href="/contact/list" class="btn btn-warning">Go back</a>
+      </div>
     </form>
 </div>
 </body>
